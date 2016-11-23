@@ -18,8 +18,36 @@ object As12 {
     def sum(a: Int, b: Int, c: Int) = a+b+c;
     var a = sum(1,2,3);
     var b = sum(1,_: Int, 3);
-    print(a + " " + b(4));
+    println(a + " " + b(4));
 
+    def twice(op: Double => Double, x: Double) = op(op(x));
+    var output = twice(_+1, 5);
+    println(output);
 
+    var assertionEnable = true;
+
+    def myAssertWithPre(predicate: () => Boolean) =
+      if(assertionEnable && !predicate())
+        throw new AssertionError;
+
+    def myAssertWithOut(predicate: => Boolean) = //calculate boolean in function
+      if(assertionEnable && !predicate)
+        throw new AssertionError;
+
+    def myAssertExampleThree(predicate: Boolean) = //calculate before call
+      if(assertionEnable && !predicate)
+        throw new AssertionError;
+
+    var ok = (x:Int, y: Int) => myAssertWithPre(()=> x/y < 0.5);
+    var notOk = (x: Int, y: Int) => myAssertWithOut(x/y < 0.5);
+
+    def myWhile(predicate: () => Boolean)(action: () => AnyVal) =
+      if(predicate())
+        action();
+
+    var test = (x: Int) => myWhile(() => x >= 0)(() => {
+      print(x+ " ");
+      x = x-1;
+    });
   }
 }
