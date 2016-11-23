@@ -4,35 +4,22 @@
 object As12 {
   def main(args: Array[String]): Unit = {
 
-    print("Hello")
     var more = 9;
-    more = 10;
-    def makeMultiplier(x: Int) = x*more;
-    println(makeMultiplier(10));
-
-    def cutter(p: Int) = (x: Int) => if(p<x)p else x;
-    val cut = cutter(100);
-    var threshold = 50;
-    println(cut(threshold));
-    threshold = 150;
-    println(cut(threshold));
-
-    def remover(p: Int) = (x: Int) => p<x;
-    val rem = remover(100);
-    threshold = 50;
-    println(rem(threshold));
-    threshold = 150;
-    println(rem(threshold));
-
-    val list = List.range(-10,11);
-    var limit = 5;
-    val cutS = cutter(limit);
-    val mul = (x: Int) => makeMultiplier(cutS(x));
-    var sum = 0;
-    for(l <- list)println(mul(Math.abs(l)))
-    println(list)
-
     def trivialSum(x: Int, y: Int) = x + y;
+    def makeMultiplier(x: Int) = x*more;
+    def cutter(p: Int) = (x: Int) => if(p>x)p else x;
+    def remover(p: Int) = (x: Int) => p<x;
+    val listExternal = List.range(-10,10);
+    for(limit <- List(-5,5)) {
+      val checker = (list: List[Int]) => {for (l <- list) print(remover(limit)(makeMultiplier(cutter(limit)(l))).toString(){0} + "; "); println();}
+      checker(listExternal);
+    }
+
+    def sum(a: Int, b: Int, c: Int) = a+b+c;
+    var a = sum(1,2,3);
+    var b = sum(1,_: Int, 3);
+    print(a + " " + b(4));
+
 
   }
 }
