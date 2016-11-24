@@ -41,13 +41,17 @@ object As12 {
     var ok = (x:Int, y: Int) => myAssertWithPre(()=> x/y < 0.5);
     var notOk = (x: Int, y: Int) => myAssertWithOut(x/y < 0.5);
 
-    def myWhile(predicate: () => Boolean)(action: () => AnyVal) =
-      if(predicate())
-        action();
+    def myWhile(predicate: => Boolean)(action: => Unit):Unit =
+      if(predicate) {
+        action
+        myWhile(predicate)(action)
+      }
 
-    var test = (x: Int) => myWhile(() => x >= 0)(() => {
-      print(x+ " ");
-      x = x-1;
-    });
+    var i = 10;
+
+    myWhile(i > -11){
+      i-=1
+      print(i + " ")
+    }
   }
 }
